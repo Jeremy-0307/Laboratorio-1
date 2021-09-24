@@ -1,12 +1,18 @@
 #pragma once
 
+#include <sstream>
+#include <fstream>
+#include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 #include "ListaCuevasAdy.h"
 #include "Cueva.h"
 #include "Cazador.h"
 #include "Wumpus.h"
+
 
 class Laberinto {
     // Representa la red de cuevas o laberinto que recorre el cazador y en alguna
@@ -77,6 +83,7 @@ public:
     // REQ: !laberinto.wumpus.estaDormido() && laberinto.wumpus.estaVivo().
     // MOD: puede cambiar la posición del Wumpus.
     // EFE: aplica regla de movimiento al azar del Wumpus.
+    int compGuess = rand() % 100 + 1; //Generates number between 1 - 100
     void moverWumpusAzar();
     
     // REQ: laberinto.cazador.estaVivo().
@@ -135,7 +142,7 @@ Laberinto::Laberinto(){
         else if (c == 1) {
             valor3 = 17;
         }
-        proximo->cueva = c;
+        proximo->cueva->id = c;
         proximo->listaCuevasAdy.agrIdCuevaAdy(c+valor1);
         proximo->listaCuevasAdy.agrIdCuevaAdy(c+valor2);
         proximo->listaCuevasAdy.agrIdCuevaAdy(c+valor3);
@@ -149,12 +156,47 @@ Laberinto::Laberinto(const Laberinto& orig){
 }
 
 Laberinto::~Laberinto() {
+    delete cazador;
+    delete wumpus;
+    if (arregloCuevas == 0) {
+        delete inicio;
+    }
+    else {
+        NodoLaberinto* ultimo = arregloCuevas;
+        while (ultimo->idCueva->listaCuevaAdy->cantidadAdy != 0) {
+            ultimo = ultimo->sgtCueva;
+            delete arregloCuevas;
+            arregloCuevas = ultimo;
+        }
+    }
+    delete cantidadAdy;
 }
 
 Laberinto::Laberinto(TipoPoliedroRegular p) {
 }
 
 Laberinto::Laberinto(string nombreArchivo) {
+    int cantidadCuevas = 0;
+    string linea;
+    string entero;
+    ifstream archivo(nombreArchivo, ios::in);
+
+    if (!archivo) {
+        cout << "no se pudo abrir el archivo "<<nombreArchivo<<".txt " << endl;
+        exit(1);
+    }
+    // luego se agregan las adyacencias salientes y entrantes:
+    while (archivo >> linea) {
+        cantidadCuevas++;
+        stringstream s(linea);
+        while (getline(s, entero, ',')) {
+            int d = stoi(entero);
+            cout << d << ',';
+        }
+        cout << endl;
+    }
+    return 0;
+
 }
 
 Cueva::Estado Laberinto::obtEstado(int idCueva) const {
@@ -191,17 +233,31 @@ int Laberinto::obtResultadoFlechazo(int idCuevaOrigen, int idCuevaObjetivo) cons
 
 void Laberinto::asgEscenario() {
     //creo que aquí puede ser id o this->id no estoy seguro
-    if (id == 0 || wumpus.obtPosicion() == id) {
+    if (id == 0) {
         //do nothing
     }
     else if (obtEstado() == v) {
-        int random = 
+        int random = and () % 3 + 1;
+        if (random == 3) {
+            cueva->e = m;
+        }
+        else if (random == 2) {
+            cueva->e = p;
+        }
+        else {
+            cueva->e = v;
+        }
     }
     
 }
-
 void Laberinto::moverWumpusAzar() {
+    if (laberinto->wumpus->estaVivo()) {
+        int nuevaPosicion = rand() % laberinto.obtCantidadCuevas();
+        laberinto->wumpus.asigPosicion(nuevaPosicion);
+    }
 }
 
 void Laberinto::moverCazadorAzar() {
+    int nuevaPosicion = rand() % laberinto.obtCantidadCuevas();
+    laberinto->cazador.asigPosicion(nuevaPosicion);
 }
