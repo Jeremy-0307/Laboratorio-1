@@ -60,41 +60,34 @@ private:
 
 ListaCuevasAdy::ListaCuevasAdy() {
     cantidadAdy = 0;
-    inicio = NodoListaCuevasAdy();
+    inicio = shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy());
 }
 
 ListaCuevasAdy::ListaCuevasAdy(const ListaCuevasAdy& orig) {
-    cantidadAdy = orig->cantidadAdy;
-    inicio = orig->inicio;
+    cantidadAdy = orig.cantidadAdy;
+    inicio = orig.inicio;
 }
 
 ListaCuevasAdy::~ListaCuevasAdy() {
-
-    if (inicio == 0) {
+   /* shared_ptr<NodoListaCuevasAdy> next = inicio;
+    while(inicio!=0){
+        next = inicio->sgtCueva;
         delete inicio;
-    }
-    else {
-        shared_ptr<NodoListaCuevasAdy>* ultimo = inicio;
-        while (ultimo->idCueva != 0) {
-            ultimo = ultimo->sgtCueva;
-            delete inicio;
-            inicio = ultimo;
-        }
-    }
-    delete cantidadAdy;
+        inicio = next;
+    }*/
 }
 
 void ListaCuevasAdy::agrIdCuevaAdy(int id) {
    
     if (inicio == 0) {
-        inicio = NodoListaCuevasAdy(id);
+        inicio = shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy(id));
     }
     else {
-        shared_ptr<NodoListaCuevasAdy>* ultimo = inicio->sgtCueva;
-        while (ultimo->idCueva != 0) {
+        shared_ptr<NodoListaCuevasAdy> ultimo = inicio;
+        while (ultimo->sgtCueva != 0) {
             ultimo = ultimo->sgtCueva;
         }
-        ultimo = NodoListaCuevasAdy(id);
+        ultimo =shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy(id));
     }
 }
 
@@ -109,14 +102,14 @@ int* ListaCuevasAdy::obtAdyacencias(){
 
 string ListaCuevasAdy::toString() {
     string resultado = "";
-    shared_ptr<NodoListaCuevasAdy>* ultimo = inicio->sgtCueva;
     if (inicio == 0) {
         //do nothing
     }
     else {
-        resultado = inicio->idCueva;
+        shared_ptr<NodoListaCuevasAdy> ultimo = inicio;
+        resultado = ultimo->idCueva;
         while (ultimo->idCueva != 0) {
-            resultado = resultado << ", " << ultimo;
+            resultado += ", " + ultimo->idCueva;
             ultimo = ultimo->sgtCueva;
         }
     }

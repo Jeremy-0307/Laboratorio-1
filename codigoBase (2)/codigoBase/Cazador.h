@@ -54,14 +54,17 @@ Cazador::Cazador() {
 }
 
 Cazador::Cazador(const Cazador& orig) {
-    posicion = orig->posicion;
-    flechas = orig->flechas;
-    vivo = orig->vivo;
+    posicion = orig.posicion;
+    flechas = orig.flechas;
+    vivo = orig.vivo;
 }
 Cazador::~Cazador() {
-    delete posicion;
-    delete vivo;
-    delete flechas;x
+    int* pointer1 = &posicion;
+    int* pointer2 = &flechas;
+    bool* pointer3 = &vivo;
+    delete pointer1;
+    delete pointer2;
+    delete pointer3;
 }
 
 int Cazador::obtPosicion() {

@@ -39,15 +39,15 @@ Wumpus::Wumpus() {
 }
 
 Wumpus::Wumpus(const Wumpus& orig) {
-    posicion = orig->posicion;
-    vivo = orig->posicion;
-    dormido = orig->dormido;
+    posicion = orig.posicion;
+    vivo = orig.posicion;
+    dormido = orig.dormido;
 }
 
 Wumpus::~Wumpus() {
-    delete posicion;
+   /* delete posicion;
     delete vivo;
-    delete dormido;
+    delete dormido;*/
 }
 
 int Wumpus::obtPosicion() {
@@ -71,5 +71,5 @@ bool Wumpus::estaDormido() {
 }
 
 void Wumpus::despertar() {
-    domido = false;
+    dormido = false;
 }

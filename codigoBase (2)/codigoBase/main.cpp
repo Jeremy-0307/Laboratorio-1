@@ -19,14 +19,30 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-    string reglas = "bla bla bla";
+    string reglas = "Bienvenido a ´Caza el Wumpus´";
     int opcion1;
-    cout << "Desea ver las reglas?\n 1-) Si\n2-) No" << opcion1;
+    cout << "Desea ver las reglas?\n 1-) Si\n2-) No" << endl;
+    cin >> opcion1 >> endl;
     if (opcion1 == 1) {
         cout << reglas << endl;
     }
-    bool loop = false;
-    while (loop == false) {
+
+    bool JuegoTerminado = false;
+
+    while (JuegoTerminado == false) {
+        int opcion2;
+        //cout << "Tienes " << laberinto.cazador.obtCantidadFlechas() << endl;
+        cout << "Disparar o Moverse?\n 1-) Disparar \n2-) Moverse" << endl;
+        cin >> opcion >> endl;
+        if(opcion2 == 1){
+            //Disparar flecha, aun no estoy muy seguro de como funciona :/
+
+        }
+        else{
+            
+
+        }
+
 
     }
     Laberinto laberinto;

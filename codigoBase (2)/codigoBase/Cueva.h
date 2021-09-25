@@ -57,37 +57,37 @@ private:
 
 Cueva::Cueva() {
     id = 0;
-    estado = v;
+    e = V;
 
 }
 
 Cueva::Cueva(int idCueva){
     id = idCueva;
-    estado = v;
+    e = V;
 }
 
-Cueva::Cueva(Cueva::Estado e){
+Cueva::Cueva(Cueva::Estado eN){
     id = 0;
-    estado = e;
+    e = eN;
 }
 
-Cueva::Cueva(int idCueva, Cueva::Estado e){
+Cueva::Cueva(int idCueva, Cueva::Estado eN){
     id = idCueva;
-    estado = e;
+    e = eN;
 }
 
 Cueva::Cueva(const Cueva& orig) {
-    estado = orig->e;
-    id = orig->id;
+    id = orig.id;
+    e = orig.e;
 }
 
 Cueva::~Cueva() {
-    delete estado;
-    delete id;
+   /* delete e;
+    delete id;*/
 }
 
 void Cueva::asgEstado(Estado ne){
-    Cueva(orig->e);
+    e = ne;
 }
 
 Cueva::Estado Cueva::obtEstado(){

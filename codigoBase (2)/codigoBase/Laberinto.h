@@ -120,12 +120,11 @@ private:
 Laberinto::Laberinto(){
     cantidadCuevas = 8;
     for (int c = 0; c < cantidadCuevas; c++) {
-        NodoLaberinto proximo;
         //los valores son la distancia entre las 3 cuevas adyacentes
         int valor1 = 2, valor2 = 2, valor3 = 1;
         if (c <= 9) {
             if (c % 2 != 0) {
-                valor1 = 9; valor2 = 7; valor3 = -1
+                valor1 = 9, valor2 = 7, valor3 = -1;
             }
         }
         else {
@@ -142,12 +141,10 @@ Laberinto::Laberinto(){
         else if (c == 1) {
             valor3 = 17;
         }
-        proximo->cueva->id = c;
-        proximo->listaCuevasAdy.agrIdCuevaAdy(c+valor1);
-        proximo->listaCuevasAdy.agrIdCuevaAdy(c+valor2);
-        proximo->listaCuevasAdy.agrIdCuevaAdy(c+valor3);
-
-        arregloCuevas[c] = proximo;
+        arregloCuevas[c].cueva.asgIdCueva(c);
+        arregloCuevas[c].listaCuevasAdy.agrIdCuevaAdy(c+valor1);
+        arregloCuevas[c].listaCuevasAdy.agrIdCuevaAdy(c+valor2);
+        arregloCuevas[c].listaCuevasAdy.agrIdCuevaAdy(c+valor3);
     }
 
 }
@@ -156,7 +153,7 @@ Laberinto::Laberinto(const Laberinto& orig){
 }
 
 Laberinto::~Laberinto() {
-    delete cazador;
+    /*delete cazador;
     delete wumpus;
     if (arregloCuevas == 0) {
         delete inicio;
@@ -169,7 +166,7 @@ Laberinto::~Laberinto() {
             arregloCuevas = ultimo;
         }
     }
-    delete cantidadAdy;
+    delete cantidadAdy;*/
 }
 
 Laberinto::Laberinto(TipoPoliedroRegular p) {
@@ -195,13 +192,17 @@ Laberinto::Laberinto(string nombreArchivo) {
         }
         cout << endl;
     }
-    return 0;
-
 }
 
 Cueva::Estado Laberinto::obtEstado(int idCueva) const {
-    return arregloCuevas[idCueva]->cueva;
-    //return Cueva::V;  
+     return arregloCuevas[idCueva].cueva.obtEstado();
+    /*if(idCueva >= 0 && idCueva <= cantidadCuevas){
+        return arregloCuevas[idCueva].cueva.obtEstado();
+    }
+    else{
+        return null;
+        //No se que retornar en caso de que la cueva no exista :/
+    } */ 
 }
 
 int Laberinto::obtCantidadCuevas() const {
@@ -209,13 +210,24 @@ int Laberinto::obtCantidadCuevas() const {
 }
 
 int* Laberinto::obtCuevasAdy(int idCueva) const {
-    int* arreglo = arregloCuevas[idCueva]->ListaCuevasAdy;
-   
+    int* arreglo;
+
+   /* ListaCuevasAdy ultimo;
+    ultimo = arregloCuevas[idCueva].listaCuevasAdy;
+    if(idCueva >= 0 && idCueva <= cantidadCuevas){
+        int c = 0;
+        while(ultimo!=nullptr){
+            arreglo[c] = ultimo->idCueva;
+            ultimo = ultimo->sgtCueva;
+            c++;
+        }
+    }
+    hay que mejorar este codigo, queda muy raro/no funciona*/
     return arreglo;
 }
 
 int Laberinto::obtCantidadCuevasAdy(int idCueva) const{
-    int resultado = arregloCuevas[idCueva]->ListaCuevasAdy.obtenerCantidadAdy;
+    int resultado = arregloCuevas[idCueva].listaCuevasAdy.obtCantidadAdy();
     return resultado;
 }
 
@@ -232,32 +244,27 @@ int Laberinto::obtResultadoFlechazo(int idCuevaOrigen, int idCuevaObjetivo) cons
 }
 
 void Laberinto::asgEscenario() {
-    //creo que aquí puede ser id o this->id no estoy seguro
-    if (id == 0) {
-        //do nothing
-    }
-    else if (obtEstado() == v) {
-        int random = and () % 3 + 1;
-        if (random == 3) {
-            cueva->e = m;
+    /*int contadorCuevas = 0, contadorPozos = 0, c = 0;
+    while(contadorCuevas <= cantidadCuevas){
+        int random = rand() % 4;
+        if(random == 4){
+            arregloCuevas[c].cueva.Estado = 0;
         }
-        else if (random == 2) {
-            cueva->e = p;
+        else{
+            arregloCuevas[c].cueva.Estado = V;       
         }
-        else {
-            cueva->e = v;
-        }
-    }
+    }*/
+
     
 }
 void Laberinto::moverWumpusAzar() {
-    if (laberinto->wumpus->estaVivo()) {
-        int nuevaPosicion = rand() % laberinto.obtCantidadCuevas();
-        laberinto->wumpus.asigPosicion(nuevaPosicion);
+    if (wumpus.estaVivo()) {
+        int nuevaPosicion = rand() % obtCantidadCuevas();
+        wumpus.asgPosicion(nuevaPosicion);
     }
 }
 
 void Laberinto::moverCazadorAzar() {
-    int nuevaPosicion = rand() % laberinto.obtCantidadCuevas();
-    laberinto->cazador.asigPosicion(nuevaPosicion);
+    int nuevaPosicion = rand() % obtCantidadCuevas();
+    cazador.asgPosicion(nuevaPosicion);
 }
