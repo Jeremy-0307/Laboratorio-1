@@ -117,6 +117,32 @@ private:
     NodoLaberinto* arregloCuevas;    
 };
 
+Laberinto::Laberinto(string nombreArchivo) {
+    string linea;
+    string entero;
+    ifstream archivo(nombreArchivo, ios::in);
+
+    if (!archivo) {
+        cout << "no se pudo abrir el archivo "<<nombreArchivo<<".txt " << endl;
+        exit(1);
+    }
+    else{
+        // luego se agregan las adyacencias salientes y entrantes:
+        while (archivo >> linea) {
+            cantidadCuevas++;
+            stringstream s(linea);
+            arregloCuevas[cantidadCuevas].cueva.asgIdCueva(cantidadCuevas);
+            while (getline(s, entero, ',')) {
+                int d = stoi(entero);
+                arregloCuevas[cantidadCuevas].listaCuevasAdy.agrIdCuevaAdy(d);
+                //cout << d << ',';
+            }
+            //cout << endl;
+        }
+
+    }
+}
+
 Laberinto::Laberinto(){
     cantidadCuevas = 8;
     for (int c = 0; c < cantidadCuevas; c++) {
@@ -172,27 +198,7 @@ Laberinto::~Laberinto() {
 Laberinto::Laberinto(TipoPoliedroRegular p) {
 }
 
-Laberinto::Laberinto(string nombreArchivo) {
-    int cantidadCuevas = 0;
-    string linea;
-    string entero;
-    ifstream archivo(nombreArchivo, ios::in);
 
-    if (!archivo) {
-        cout << "no se pudo abrir el archivo "<<nombreArchivo<<".txt " << endl;
-        exit(1);
-    }
-    // luego se agregan las adyacencias salientes y entrantes:
-    while (archivo >> linea) {
-        cantidadCuevas++;
-        stringstream s(linea);
-        while (getline(s, entero, ',')) {
-            int d = stoi(entero);
-            cout << d << ',';
-        }
-        cout << endl;
-    }
-}
 
 Cueva::Estado Laberinto::obtEstado(int idCueva) const {
      return arregloCuevas[idCueva].cueva.obtEstado();
@@ -244,16 +250,16 @@ int Laberinto::obtResultadoFlechazo(int idCuevaOrigen, int idCuevaObjetivo) cons
 }
 
 void Laberinto::asgEscenario() {
-    /*int contadorCuevas = 0, contadorPozos = 0, c = 0;
+    int contadorCuevas = 0, contadorPozos = 0, c = 0;
     while(contadorCuevas <= cantidadCuevas){
         int random = rand() % 4;
         if(random == 4){
-            arregloCuevas[c].cueva.Estado = 0;
+            //arregloCuevas[c].cueva.asgEstado(P);
         }
         else{
-            arregloCuevas[c].cueva.Estado = V;       
+            //arregloCuevas[c].cueva.asgEstado(V);       
         }
-    }*/
+    }
 
     
 }

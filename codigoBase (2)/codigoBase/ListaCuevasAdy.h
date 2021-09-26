@@ -80,11 +80,13 @@ ListaCuevasAdy::~ListaCuevasAdy() {
 void ListaCuevasAdy::agrIdCuevaAdy(int id) {
    
     if (inicio == 0) {
+        cantidadAdy++;
         inicio = shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy(id));
     }
     else {
         shared_ptr<NodoListaCuevasAdy> ultimo = inicio;
         while (ultimo->sgtCueva != 0) {
+            cantidadAdy++;
             ultimo = ultimo->sgtCueva;
         }
         ultimo =shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy(id));

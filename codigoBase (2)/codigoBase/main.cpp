@@ -9,26 +9,25 @@
  * Author: Alan
  *
  * Created on 18 de abril de 2017, 11:13 AM
- */
+#include "Laberinto.h"
 
+ */
+#include "Laberinto.h"
 #include <iostream>
 using namespace std;
-#include "Laberinto.h"
 /*
  * 
  */
 int main(int argc, char** argv) {
 
-    string reglas = "Bienvenido a ´Caza el Wumpus´";
+    /*string reglas = "Bienvenido a ´Caza el Wumpus´";
     int opcion1;
     cout << "Desea ver las reglas?\n 1-) Si\n2-) No" << endl;
     cin >> opcion1 >> endl;
     if (opcion1 == 1) {
         cout << reglas << endl;
     }
-
     bool JuegoTerminado = false;
-
     while (JuegoTerminado == false) {
         int opcion2;
         //cout << "Tienes " << laberinto.cazador.obtCantidadFlechas() << endl;
@@ -38,15 +37,10 @@ int main(int argc, char** argv) {
             //Disparar flecha, aun no estoy muy seguro de como funciona :/
 
         }
-        else{
-            
-
+        else{    
         }
-
-
     }
-    Laberinto laberinto;
-    
-    return 0;
+    Laberinto laberinto;*/
+
 }
 
