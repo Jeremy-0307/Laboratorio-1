@@ -107,7 +107,7 @@ private:
     struct NodoLaberinto{
         Cueva cueva; // cueva en el laberinto
         ListaCuevasAdy listaCuevasAdy; // lista de idCueva de cuevas adyacentes
-        NodoLaberinto(){}; // sólo constructor estándar
+        NodoLaberinto():cueva(),listaCuevasAdy(){}; // sólo constructor estándar
     };
 
     int cantidadCuevas; // representa la cantidad de cuevas en el laberinto
@@ -144,8 +144,10 @@ Laberinto::Laberinto(string nombreArchivo) {
 }
 
 Laberinto::Laberinto(){
-    cantidadCuevas = 8;
+    cantidadCuevas = 20;
+    arregloCuevas = new NodoLaberinto[cantidadCuevas];
     for (int c = 0; c < cantidadCuevas; c++) {
+        int temporal = c;
         //los valores son la distancia entre las 3 cuevas adyacentes
         int valor1 = 2, valor2 = 2, valor3 = 1;
         if (c <= 9) {
@@ -252,7 +254,7 @@ int Laberinto::obtResultadoFlechazo(int idCuevaOrigen, int idCuevaObjetivo) cons
 void Laberinto::asgEscenario() {
     int contadorCuevas = 0, contadorPozos = 0, c = 0;
     while(contadorCuevas <= cantidadCuevas){
-        int random = rand() % 4;
+        int random = rand()%(4 + 1);
         if(random == 4){
             //arregloCuevas[c].cueva.asgEstado(P);
         }
