@@ -8,6 +8,7 @@
 #include <ctime>
 using namespace std;
 
+
 #include "ListaCuevasAdy.h"
 #include "Cueva.h"
 #include "Cazador.h"
@@ -144,12 +145,12 @@ Laberinto::Laberinto(string nombreArchivo) {
 }
 
 Laberinto::Laberinto(){
-    cantidadCuevas = 20;
-    arregloCuevas = new NodoLaberinto[cantidadCuevas];
-    for (int c = 0; c < cantidadCuevas; c++) {
-        int temporal = c;
+
+    cantidadCuevas = 19;
+    arregloCuevas = new NodoLaberinto[cantidadCuevas+1];
+    for (int c = 0; c <= cantidadCuevas; c++) {
         //los valores son la distancia entre las 3 cuevas adyacentes
-        int valor1 = 2, valor2 = 2, valor3 = 1;
+        int valor1 = 2, valor2 = 1, valor3 = -2;
         if (c <= 9) {
             if (c % 2 != 0) {
                 valor1 = 9, valor2 = 7, valor3 = -1;
@@ -157,23 +158,30 @@ Laberinto::Laberinto(){
         }
         else {
             if (c % 2 != 0) {
-                valor3 = -1;
+                valor3 = -2; valor2 = -1;
             }
             else {
-                valor1 = 9; valor2 = 7;
+                valor1 = -7; valor3 = -9;
             }
         }
         if (c == 0 || c == 11) {
             valor3 = 8;
         }
         else if (c == 1) {
-            valor3 = 17;
+            valor3 = 17; valor2 = -1;
+        }
+        else if (c == 19 | c == 8) {
+            valor1 = -8;
+        }
+        else if (c == 18) {
+            valor1 = -17;
         }
         arregloCuevas[c].cueva.asgIdCueva(c);
         arregloCuevas[c].listaCuevasAdy.agrIdCuevaAdy(c+valor1);
         arregloCuevas[c].listaCuevasAdy.agrIdCuevaAdy(c+valor2);
         arregloCuevas[c].listaCuevasAdy.agrIdCuevaAdy(c+valor3);
     }
+
 
 }
 
@@ -203,7 +211,7 @@ Laberinto::Laberinto(TipoPoliedroRegular p) {
 
 
 Cueva::Estado Laberinto::obtEstado(int idCueva) const {
-     return arregloCuevas[idCueva].cueva.obtEstado();
+    return arregloCuevas[idCueva].cueva.obtEstado();
     /*if(idCueva >= 0 && idCueva <= cantidadCuevas){
         return arregloCuevas[idCueva].cueva.obtEstado();
     }
@@ -217,20 +225,8 @@ int Laberinto::obtCantidadCuevas() const {
     return cantidadCuevas;  // sustituya con su propio codigo
 }
 
-int* Laberinto::obtCuevasAdy(int idCueva) const {
-    int* arreglo;
-
-   /* ListaCuevasAdy ultimo;
-    ultimo = arregloCuevas[idCueva].listaCuevasAdy;
-    if(idCueva >= 0 && idCueva <= cantidadCuevas){
-        int c = 0;
-        while(ultimo!=nullptr){
-            arreglo[c] = ultimo->idCueva;
-            ultimo = ultimo->sgtCueva;
-            c++;
-        }
-    }
-    hay que mejorar este codigo, queda muy raro/no funciona*/
+int* Laberinto::obtCuevasAdy(int idCueva) const { 
+    int* arreglo = arregloCuevas[idCueva].listaCuevasAdy.obtAdyacencias();
     return arreglo;
 }
 
@@ -246,28 +242,26 @@ int Laberinto::obtCantidadCuevasAdy(int idCueva) const{
     // NOTA: durante el juego idCuevaOrigen será la cueva en que se encuentra
     //       el cazador, mientras que idCuevaObjetivo es la dirección que 
     //       selecciona el jugador para la flecha, la cueva por donde sale.
-
 int Laberinto::obtResultadoFlechazo(int idCuevaOrigen, int idCuevaObjetivo) const {
     return 0;  // sustituya con su propio codigo
 }
 
 void Laberinto::asgEscenario() {
-    int contadorCuevas = 0, contadorPozos = 0, c = 0;
-    while(contadorCuevas <= cantidadCuevas){
-        int random = rand()%(4 + 1);
+    for(int c = 1; c <= cantidadCuevas; c++){
+        int random = 1 +rand()%4;
         if(random == 4){
-            //arregloCuevas[c].cueva.asgEstado(P);
+            int random2 = rand()%2;
+            random2 == 0 ? arregloCuevas[c].cueva.asgEstado(Cueva::P) : arregloCuevas[c].cueva.asgEstado(Cueva::M);
         }
         else{
-            //arregloCuevas[c].cueva.asgEstado(V);       
+            arregloCuevas[c].cueva.asgEstado(Cueva::V);       
         }
     }
-
     
 }
 void Laberinto::moverWumpusAzar() {
     if (wumpus.estaVivo()) {
-        int nuevaPosicion = rand() % obtCantidadCuevas();
+        int nuevaPosicion =  rand() % obtCantidadCuevas();
         wumpus.asgPosicion(nuevaPosicion);
     }
 }

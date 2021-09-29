@@ -22,41 +22,82 @@ int main(int argc, char** argv) {
 
 
     string reglas = "Bienvenido a ´Caza el Wumpus´\n";
+
     int opcion1;
     cout << "Desea ver las reglas?\n 1-) Si\n2-) No" << endl;
     cin >> opcion1;
+
     if (opcion1 == 1) {
         cout << reglas << endl;
     }
-    //laberinto creado
-    Laberinto lbrt;
-    lbrt.cazador.asgPosicion(0);
-    for(int c = 0; c<100; c++){
-        cout << "cueva: "<<rand() % (lbrt.obtCantidadCuevas()) <<endl;
+
+    int opcionLaberinto;
+    cout << "En que tipo de laberinto le gustaría jugar?\n 1-) Dodecaedro\n2-) Cubo\n3-) Irregular (archivo)" << endl;
+
+    switch(opcionLaberinto) {    
+        case 1: 
+        break;
+        case 2: 
+        break;
+        default: 
+        string nombreArchivo;
+        cout << "Ingrese el nombre del archivo" << endl;
+        cin >> nombreArchivo;
     }
-    //int randNum = rand()%(max-min + 1) + min;
-    cout << " obtCantidadCuevas: "<< lbrt.obtCantidadCuevas();
-    int posicionInicialW = rand() % lbrt.obtCantidadCuevas();
-    lbrt.wumpus.asgPosicion(2);
 
+    Laberinto lbrt;
+    lbrt.asgEscenario();
+    lbrt.cazador.asgPosicion(0);
+    lbrt.moverWumpusAzar();
 
-    bool JuegoTerminado = false;
+    //laberinto creado
 
-    while (JuegoTerminado == false) {
-        int opcion2;
-        //cout << "Tienes " << laberinto.cazador.obtCantidadFlechas() << endl;
-        cout << "Disparar o Moverse?\n 1-) Disparar \n2-) Moverse" << endl;
+    bool juegoAcabado = false;
+    while(juegoAcabado == false){
+        int opcion2;   
+        cout << "Estas en la Cueva: "<<lbrt.cazador.obtPosicion()<<"\nDesea... \n1-) Disparar\n2-) Moverse" << endl;
         cin >> opcion2;
         if(opcion2 == 1){
-            //Disparar flecha, aun no estoy muy seguro de como funciona :/
-
+            /*cout << "Desea... \n1-) Disparar\n2-) Moverse" << endl;
+            int opcionFlechazo;
+            switch(opcionFlechazo   ) {    
+            case 1: 
+            break;
+            case 2: 
+            break;
+            default: 
+        
+            }*/
+            //Laberinto.
         }
-        else{    
-            cout << "A cual cueva desea moverse?" ;
+        else{
+            int opcionMovimiento;
+            bool movimientoValido = false;
+            int* cuevasAdy = lbrt.obtCuevasAdy(lbrt.cazador.obtPosicion());
+            for(int f = 0; f < lbrt.obtCantidadCuevasAdy(lbrt.cazador.obtPosicion()); f++){
+                if(opcionMovimiento == cuevasAdy[f]){
+                    movimientoValido = true;
+                }
+            }
+            if(movimientoValido == true) lbrt.cazador.asgPosicion(opcionMovimiento);
+            switch(lbrt.obtEstado(opcionMovimiento)){    
+                case 1:
+                    lbrt.moverCazadorAzar();
+                    cout << "Habia un Murcielago en la cueva!\n Fuisto movido a la cueva: "<<lbrt.cazador.obtPosicion()<<endl;
+                break;
+                case 2: 
+                    lbrt.cazador.matar();
+                    cout << "AHHHHHHHHHHHHHHHHHHHHHH\nWOOPS! Caiste en un Pozo!"<<endl;
+                break;      
+            }
+            juegoAcabado = (lbrt.cazador.estaVivo() == false ||  lbrt.wumpus.estaVivo() == false) ? true : juegoAcabado;
         }
-        JuegoTerminado=true;
 
+
+
+        lbrt.obtCuevasAdy(0);
     }
+    
     return 0;
 
 }

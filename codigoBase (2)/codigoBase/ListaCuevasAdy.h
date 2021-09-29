@@ -1,7 +1,10 @@
 
 #include <memory>
 #include <string>
+#include <iostream>
 using namespace std;
+
+
 
 class ListaCuevasAdy {
     // Representa una lista ligada con las identificaciones de las cuevas 
@@ -49,7 +52,7 @@ private:
         shared_ptr<NodoListaCuevasAdy> sgtCueva; // siguiente nodo de la ListaCuevasAdy
         
         // constructores del nodo:
-        NodoListaCuevasAdy(): idCueva(0), sgtCueva(nullptr){};
+        NodoListaCuevasAdy(): idCueva(-1), sgtCueva(nullptr){};
         NodoListaCuevasAdy(int id): idCueva(id), sgtCueva(nullptr){};
         NodoListaCuevasAdy(const NodoListaCuevasAdy& orig): idCueva(orig.idCueva), sgtCueva(orig.sgtCueva){};
     };
@@ -69,49 +72,62 @@ ListaCuevasAdy::ListaCuevasAdy(const ListaCuevasAdy& orig) {
 }
 
 ListaCuevasAdy::~ListaCuevasAdy() {
-   /* shared_ptr<NodoListaCuevasAdy> next = inicio;
-    while(inicio!=0){
-        next = inicio->sgtCueva;
-        delete inicio;
-        inicio = next;
-    }*/
 }
 
 void ListaCuevasAdy::agrIdCuevaAdy(int id) {
-   
-    if (inicio == 0) {
-        cantidadAdy++;
+    if (inicio->idCueva == -1) {
         inicio = shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy(id));
+        cantidadAdy++;
     }
-    else {
+    else{
+        cantidadAdy++;
         shared_ptr<NodoListaCuevasAdy> ultimo = inicio;
-        while (ultimo->sgtCueva != 0) {
-            cantidadAdy++;
+        while(ultimo != nullptr){
             ultimo = ultimo->sgtCueva;
         }
-        ultimo =shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy(id));
+        ultimo = shared_ptr<NodoListaCuevasAdy>(new NodoListaCuevasAdy(id));
+        ultimo->sgtCueva = inicio;
+        inicio = ultimo;
     }
+
 }
 
 int ListaCuevasAdy::obtCantidadAdy(){  
     return cantidadAdy;  
 }
+    // EFE: retorna un puntero a un arreglo de enteros que contiene los identificadores
+    //      de las cuevas adyacentes.
+    // NOTA 1: retorna null si *this está vacía.
+    // NOTA 2: el contexto invocador es responsable de aplicar delete[] al arreglo.
 
 int* ListaCuevasAdy::obtAdyacencias(){
-    int* arreglo = 0;
+    int* arreglo;
+    arreglo[10];
+    if(cantidadAdy == 0){
+        return nullptr;
+    }
+    else{
+        shared_ptr<NodoListaCuevasAdy> ultimo = inicio; 
+        for(int c = 1; c<=cantidadAdy;c++){
+            int numero =  ultimo->idCueva;
+            arreglo[c] = numero;
+            ultimo = ultimo->sgtCueva;
+            cout<<arreglo[c]<<" si no funciona me mato"<<endl;
+        }     
+    }
     return arreglo; 
 }
+
+
 
 string ListaCuevasAdy::toString() {
     string resultado = "";
     if (inicio == 0) {
-        //do nothing
     }
-    else {
+    else {      
         shared_ptr<NodoListaCuevasAdy> ultimo = inicio;
-        resultado = ultimo->idCueva;
-        while (ultimo->idCueva != 0) {
-            resultado += ", " + ultimo->idCueva;
+        while (ultimo != nullptr) {
+            resultado +=  to_string(ultimo->idCueva) + ", ";
             ultimo = ultimo->sgtCueva;
         }
     }

@@ -4,12 +4,11 @@ class Cueva {
     // Representa una cueva del laberinto.
 public:
     /* TIPO PÚBLICO DE ESTADOS DE UNA CUEVA */
-    enum Estado {
+    enum Estado {M,P,V};
         // representa el estado de la cueva
-        M, // representa Murciélagos transportadores
-        P, // representa un Pozo
-        V, // representa una cueva Vacía, sin trampas
-    };
+         //M representa Murciélagos transportadores
+         //P representa un Pozo
+         //Vrepresenta una cueva Vacía, sin trampas
     
     /* CONSTRUCTORES: */
     // EFE: construye una cueva con id == 0 y estado == V.
@@ -82,8 +81,6 @@ Cueva::Cueva(const Cueva& orig) {
 }
 
 Cueva::~Cueva() {
-   /* delete e;
-    delete id;*/
 }
 
 void Cueva::asgIdCueva(int idCuevaN){
