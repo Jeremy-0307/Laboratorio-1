@@ -1,19 +1,19 @@
 #include "pch.h"
 
-#include "../HuntTheWumpus/ListaCuevasAdy.h"
-#include "../HuntTheWumpus/Cueva.h"
-#include "../HuntTheWumpus/Cazador.h"
-#include "../HuntTheWumpus/Laberinto.h"
-#include "../HuntTheWumpus/Wumpus.h"
+#include "../ProyectoConJeremyHTW/ListaCuevasAdy.h"
+#include "../ProyectoConJeremyHTW/Cueva.h"
+#include "../ProyectoConJeremyHTW/Cazador.h"
+#include "../ProyectoConJeremyHTW/Laberinto.h"
+#include "../ProyectoConJeremyHTW/Wumpus.h"
 
-class HuntTheWumpusPrueba : public ::testing::Test {
+class ListaCuevasAdyPrueba : public ::testing::Test {
 protected:
 	/* DATOS COMUNES A CASOS DE PRUEBA */
 	ListaCuevasAdy trp;
 	// Constructor inicializador del suite de pruebas.
-	HuntTheWumpusPrueba();
+	ListaCuevasAdyPrueba();
 	// Destructor del suite de pruebas.
-	~HuntTheWumpusPrueba() override;
+	~ListaCuevasAdyPrueba() override;
 	/* INICIALIZACION DE LAS PRUEBAS, puede eliminarse si no se usa.*/
 	// se invoca al iniciar cada prueba del accesorio.00
 	void SetUp() override;
@@ -22,36 +22,34 @@ protected:
 	void TearDown() override;
 };
 /* DEFINICIÓN DE LOS MÉTODOS BÁSICOS DEL ACCESORIO */
-HuntTheWumpusPrueba::HuntTheWumpusPrueba()
+ListaCuevasAdyPrueba::ListaCuevasAdyPrueba()
 {}
-HuntTheWumpusPrueba::~HuntTheWumpusPrueba()
+ListaCuevasAdyPrueba::~ListaCuevasAdyPrueba()
 {}
-void HuntTheWumpusPrueba::SetUp()
+void ListaCuevasAdyPrueba::SetUp()
 {}
-void HuntTheWumpusPrueba::TearDown()
+void ListaCuevasAdyPrueba::TearDown()
 {}
-
-
 
 
 
 /* CASOS DE PRUEBA */
 //Caso 1.1
-//CAMBIAr a la lista de Jeremy una vez el constructor este hecho
-TEST_F(HuntTheWumpusPrueba, InicializacionCorrecta)
+
+TEST_F(ListaCuevasAdyPrueba, InicializacionCorrecta) 
 {
 	trp.obtAdyacencias();
 	EXPECT_EQ(trp.obtAdyacencias(), 1);
 }
 //Caso 1.2.1
-TEST_F(HuntTheWumpusPrueba, agregarUnElemento)
+TEST_F(ListaCuevasAdyPrueba, agregarUnElemento)
 {
 	trp.agrIdCuevaAdy(1);
 	//EXPECT DE  tamanio lista uno mas
 	EXPECT_EQ(trp.obtCantidadAdy(), 1);
 }
 //Caso 1.2.2
-TEST_F(HuntTheWumpusPrueba, agregarDosElementos)
+TEST_F(ListaCuevasAdyPrueba, agregarDosElementos)
 {
 	trp.agrIdCuevaAdy(1);
 	trp.agrIdCuevaAdy(2);
@@ -59,7 +57,7 @@ TEST_F(HuntTheWumpusPrueba, agregarDosElementos)
 	EXPECT_EQ(trp.obtCantidadAdy(), 2);
 }
 //Caso 1.2.3
-TEST_F(HuntTheWumpusPrueba, agregarTresElementos)
+TEST_F(ListaCuevasAdyPrueba, agregarTresElementos)
 {
 	trp.agrIdCuevaAdy(1);
 	trp.agrIdCuevaAdy(2);
@@ -71,24 +69,24 @@ TEST_F(HuntTheWumpusPrueba, agregarTresElementos)
 // caso 1.3
 //falta hacer (Programar las pruebas del constructor de copias abarcando listas de 0, 1, 2 y 3 elementos.)
 //NOTA: comprobar usando : toString() y obtCantidadAdy().
-TEST_F(HuntTheWumpusPrueba, constructorDeCopias)
+TEST_F(ListaCuevasAdyPrueba, constructorDeCopias)
 {
-
+	
 }
 
 //caso 5.1
 // no sé como probar el funcionamiento del mapa DRA
-TEST_F(HuntTheWumpusPrueba, funcionamientoDRA)
+TEST_F(ListaCuevasAdyPrueba, funcionamientoDRA)
 {
 
 }
 //laberinto poliedro constructor no esta hecho todavia
-TEST_F(HuntTheWumpusPrueba, labPoliedro)
+TEST_F(ListaCuevasAdyPrueba, labPoliedro)
 {
 
 }
 // caso 5.4 2 arch(con cinco y con diez cuevas, 3 y 4 adyacencias).
-TEST_F(HuntTheWumpusPrueba, lectorDeArchivos)
+TEST_F(ListaCuevasAdyPrueba, lectorDeArchivos)
 {
 
 }
@@ -96,13 +94,14 @@ TEST_F(HuntTheWumpusPrueba, lectorDeArchivos)
 //al menos otro poliedro regular, así como un laberinto irregular.
 //NOTA: en todos los casos anteriores comprobar cantidad de cuevas y adyacencias por
 //cueva con obtCuevasAdy(...).
-TEST_F(HuntTheWumpusPrueba, constructorDeCopias)
+TEST_F(ListaCuevasAdyPrueba, constructorDeCopias)
 {
 
 }
 //caso 5.5 Las del método void asgEscenario(), comprobar cantidad de pozos, murciélagos, posición del Wumpus y del cazador.
-TEST_F(HuntTheWumpusPrueba, metAsgEscenario)
+TEST_F(ListaCuevasAdyPrueba, metAsgEscenario)
 {
 	//activar el asg escenario
 	// //variable local de posicion wumpus ejm, si despues de Moverwumpus la posicion wumpus es diferente true
 	//solicitar posicion pozos, murcielago, wumpus ty cazador
+}
